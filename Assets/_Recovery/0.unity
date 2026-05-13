@@ -1447,9 +1447,6 @@ MonoBehaviour:
   fireRate: 1
   healthText: {fileID: 820843496}
   bulletPrefab: {fileID: 154451569958641183, guid: ef9a7faca8c7dce48b6572e42895ee45, type: 3}
-  chargebulletPrefab: {fileID: 3855001170381072694, guid: 4b37430a39093834283b984e273be257, type: 3}
-  chargeTime: 2
-  chargeBulletSpeed: 20
   mainCamera: {fileID: 330585545}
 --- !u!54 &1521906447
 Rigidbody:

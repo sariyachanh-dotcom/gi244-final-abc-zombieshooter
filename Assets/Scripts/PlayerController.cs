@@ -11,6 +11,13 @@ public class PlayerController : MonoBehaviour
     public float fireRate = 1f;
     public TextMeshProUGUI healthText;
     public GameObject bulletPrefab;
+    public GameObject chargebulletPrefab;
+    public float chargeTime = 2f;
+    public float chargeBulletSpeed = 20f;
+
+    private float currentCharge;
+    private bool isCharging;
+
     public Camera mainCamera;
 
     private float immunityFrame = 0.5f;
@@ -48,6 +55,29 @@ public class PlayerController : MonoBehaviour
 
             nextFireTime = Time.time + fireRate;
         }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            isCharging = true;
+            currentCharge = 0f;
+        }
+
+        if (Input.GetButton("Fire2"))
+        {
+            currentCharge += Time.deltaTime;
+        }
+
+        if (Input.GetButtonUp("Fire2"))
+        {
+            isCharging = false;
+
+            if (currentCharge >= chargeTime)
+            {
+                ShootChargeBullet();
+            }
+        }
+
+
     }
 
     private void Shoot()
@@ -62,6 +92,21 @@ public class PlayerController : MonoBehaviour
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = new Vector3(dir.x, 0, dir.y) * bulletSpeed;
+    }
+    private void ShootChargeBullet()
+    {
+        Vector3 mousePos = Input.mousePosition;
+
+        Vector3 sreenPos = mainCamera.WorldToScreenPoint(transform.position);
+
+        Vector3 dir = (mousePos -  sreenPos).normalized;
+
+        GameObject bullet = Instantiate(
+            chargebulletPrefab,transform.position, Quaternion.identity);
+
+        Rigidbody rb = bullet.GetComponent <Rigidbody>();
+
+        rb.linearVelocity = new Vector3(dir.x, 0, dir.y) * chargeBulletSpeed;
     }
 
     private void OnTriggerEnter(Collider other)
