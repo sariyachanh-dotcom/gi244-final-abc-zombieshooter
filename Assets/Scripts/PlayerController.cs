@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class PlayerController : MonoBehaviour
 
     private float currentCharge;
     private bool isCharging;
+
+    public GameObject bomberBulletPrefeb;
+    public float bomberBulletSpeed = 15f;
+    public float bomberCooldown = 10f;
+
+    private float nextbomberTime;
 
     public Camera mainCamera;
 
@@ -77,6 +84,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButtonDown(2) && Time.time >= nextbomberTime)
+        {
+            ShootBomberBullet();
+
+            nextbomberTime =
+                Time.time + bomberCooldown;
+        }
+
 
     }
 
@@ -108,6 +123,29 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector3(dir.x, 0, dir.y) * chargeBulletSpeed;
     }
+
+ private void ShootBomberBullet()
+{
+    Vector3 mosePos = Input.mousePosition;
+
+    Vector3 screenPos =
+        mainCamera.WorldToScreenPoint(transform.position);
+
+    Vector3 dir =
+        (mosePos - screenPos).normalized;
+
+    GameObject bullet = Instantiate(
+        bomberBulletPrefeb,
+        transform.position,
+        Quaternion.identity);
+
+    Rigidbody rb =
+        bullet.GetComponent<Rigidbody>();
+
+    rb.linearVelocity =
+        new Vector3(dir.x, 0, dir.y)
+        * bomberBulletSpeed;
+}
 
     private void OnTriggerEnter(Collider other)
     {
