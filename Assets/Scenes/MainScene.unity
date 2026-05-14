@@ -1247,6 +1247,8 @@ MonoBehaviour:
   powerUpSpawnArea: {fileID: 1888638457}
   waveText: {fileID: 1766594130}
   countdownText: {fileID: 499570727}
+  currentWave: 0
+  enemyKillCount: 0
 --- !u!1 &1307045143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1448,17 @@ MonoBehaviour:
   bulletSpeed: 10
   healthText: {fileID: 820843496}
   bulletPrefab: {fileID: 154451569958641183, guid: ef9a7faca8c7dce48b6572e42895ee45, type: 3}
+<<<<<<< Updated upstream
+=======
+  chargebulletPrefab: {fileID: 3855001170381072694, guid: 4b37430a39093834283b984e273be257, type: 3}
+  chargeTime: 2
+  chargeBulletSpeed: 20
+  bomberBulletPrefeb: {fileID: 4253610573484465609, guid: 02938d411fabd554b8294d20e0036038, type: 3}
+  bomberBulletSpeed: 15
+  bomberCooldown: 10
+  homingBulletPrefab: {fileID: 2899265716705289397, guid: 9d83e313c3a841140a9f7b4d4623c7f4, type: 3}
+  homingCooldown: 5
+>>>>>>> Stashed changes
   mainCamera: {fileID: 330585545}
 --- !u!54 &1521906447
 Rigidbody:
