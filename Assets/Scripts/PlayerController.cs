@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
 
     private float nextbomberTime;
 
+    public GameObject homingBulletPrefab;
+    public float homingCooldown = 5f;
+
+    private float nextHomingTime;
+
     public Camera mainCamera;
 
     private float immunityFrame = 0.5f;
@@ -92,6 +97,14 @@ public class PlayerController : MonoBehaviour
                 Time.time + bomberCooldown;
         }
 
+        if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextHomingTime)
+        {
+            ShootHomingBullet();
+
+            nextHomingTime =
+                Time.time + homingCooldown;
+        }
+
 
     }
 
@@ -124,8 +137,8 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(dir.x, 0, dir.y) * chargeBulletSpeed;
     }
 
- private void ShootBomberBullet()
-{
+     private void ShootBomberBullet()
+    {
     Vector3 mosePos = Input.mousePosition;
 
     Vector3 screenPos =
@@ -145,7 +158,12 @@ public class PlayerController : MonoBehaviour
     rb.linearVelocity =
         new Vector3(dir.x, 0, dir.y)
         * bomberBulletSpeed;
-}
+    }
+    private void ShootHomingBullet()
+    {
+        Instantiate(homingBulletPrefab,transform.position, Quaternion.identity);
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
