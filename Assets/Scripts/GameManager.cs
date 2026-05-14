@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 
@@ -22,10 +23,20 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI waveText;
     public TextMeshProUGUI countdownText;
 
+    public int currentWave;
+    public int enemyKillCount;
+
+    private float surviveTime;
+    private string savePath;
+
     private Coroutine waveCoroutine;
 
     private void Start()
     {
+        savePath =
+            Application.persistentDataPath + "/save.json";
+        LoadGame();
+
         StartCoroutine(WaveControl());
     }
 
@@ -86,5 +97,41 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSeconds(currentWave.spawnInterval);
         }
+    }
+    public void SaveGame()
+    {
+        SaveData data = new SaveData();
+        data.wave = currentWave;
+        data.killCount = enemyKillCount;
+        data.surviveTime = surviveTime;
+
+        string json =
+            JsonUtility.ToJson(data, true);
+        File.WriteAllText(savePath, json);
+
+        Debug.Log("Saved");
+    }
+
+    public void LoadGame()
+    {
+        if (File.Exists(savePath))
+        {
+            string json = File.ReadAllText(savePath);
+
+            SaveData data =
+                JsonUtility.FromJson<SaveData>(json);
+
+            currentWave = data.wave;
+            enemyKillCount = data.killCount;
+            surviveTime = data.surviveTime;
+
+            Debug.Log("Loaded");
+
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
     }
 }

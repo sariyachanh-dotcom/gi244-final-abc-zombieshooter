@@ -1450,6 +1450,9 @@ MonoBehaviour:
   chargebulletPrefab: {fileID: 3855001170381072694, guid: 4b37430a39093834283b984e273be257, type: 3}
   chargeTime: 2
   chargeBulletSpeed: 20
+  bomberBulletPrefeb: {fileID: 4253610573484465609, guid: 02938d411fabd554b8294d20e0036038, type: 3}
+  bomberBulletSpeed: 15
+  bomberCooldown: 10
   mainCamera: {fileID: 330585545}
 --- !u!54 &1521906447
 Rigidbody:
